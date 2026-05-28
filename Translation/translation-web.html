@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Translation of Program Content — Promote</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand: #731d75; --brand-dark: #5a1560; --brand-light: #f3e6f4; --brand-mid: #d9a8db;
+    --pink: #d33375;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    --radius: 10px; --radius-sm: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: .6rem; }
+  .hero-title { font-size: 42px; font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 1rem; letter-spacing: -.02em; }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .lead { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 580px; margin-bottom: .5rem; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+  .badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+  .badge-gray { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+
+  /* How it works — visual flow */
+  .flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 2.5rem; }
+  .flow-step { display: flex; gap: 1.25rem; }
+  .flow-left { display: flex; flex-direction: column; align-items: center; }
+  .flow-num { width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .flow-line { width: 1px; background: var(--border); flex: 1; margin: 4px 0; min-height: 20px; }
+  .flow-step:last-child .flow-line { display: none; }
+  .flow-content { padding-bottom: 1.4rem; }
+  .flow-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: .25rem; padding-top: 5px; }
+  .flow-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .flow-tip { display: inline-block; margin-top: .5rem; font-size: 12px; color: var(--brand-dark); background: var(--brand-light); padding: 4px 10px; border-radius: var(--radius-sm); }
+
+  /* What gets translated */
+  .translation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 2.5rem; }
+  .trans-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.15rem 1.25rem; }
+  .trans-card.yes { border-top: 3px solid var(--brand); }
+  .trans-card.no { border-top: 3px solid var(--border); }
+  .trans-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .75rem; }
+  .trans-label.yes { color: var(--brand); }
+  .trans-label.no { color: var(--text-faint); }
+  .trans-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .trans-list li { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+  .trans-list li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .trans-card.yes .trans-list li::before { background: var(--brand); }
+  .trans-card.no .trans-list li::before { background: var(--border); }
+
+  /* Language count callout */
+  .callout { background: var(--brand-light); border-radius: var(--radius); padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2.5rem; }
+  .callout-num { font-size: 40px; font-weight: 700; color: var(--brand); line-height: 1; flex-shrink: 0; }
+  .callout-text p:first-child { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .callout-text p:last-child { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* Feature highlights */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 2.5rem; }
+  .feature-item { display: flex; gap: 12px; align-items: flex-start; background: var(--surface-2); border-radius: var(--radius); padding: 1rem 1.1rem; }
+  .feature-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); margin-top: 6px; flex-shrink: 0; }
+  .feature-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+  .feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, #731d75 0%, #d33375 100%); border-radius: var(--radius); padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cta-text { color: #fff; }
+  .cta-text h3 { font-size: 18px; font-weight: 600; margin-bottom: .3rem; }
+  .cta-text p { font-size: 14px; opacity: .85; }
+  .cta-btn { background: #fff; color: var(--brand-dark); font-size: 14px; font-weight: 600; padding: .65rem 1.4rem; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+
+  .footer-note { margin-top: 2rem; font-size: 12px; color: var(--text-faint); text-align: center; }
+
+  @media (max-width: 520px) {
+    .translation-grid, .feature-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">New in Promote</p>
+  <h1 class="hero-title">Translate your programs.<br><em>Instantly.</em></h1>
+  <p class="lead">Turn any program into a fully translated copy — powered by DeepL — so you can deliver the same training to learners in their own language.</p>
+  <div class="badge-row">
+    <span class="badge badge-brand">✓ Now available</span>
+    <span class="badge badge-gray">Program Design</span>
+    <span class="badge badge-gray">Learner Experience</span>
+    <span class="badge badge-gray">Requires add-on</span>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">How it works</p>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-num">1</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <p class="flow-title">Open any program and select Copy program</p>
+        <p class="flow-desc">The translation option is part of the standard copy flow — no separate tool needed.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-num">2</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <p class="flow-title">Choose your target language</p>
+        <p class="flow-desc">Pick any language your learners need — if it's enabled in Promote, it's ready to translate into.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-num">3</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <p class="flow-title">Add translation context (optional but recommended)</p>
+        <p class="flow-desc">Tell DeepL about your industry, audience, tone, or any terms that should stay untranslated. This improves accuracy — especially for technical or domain-specific content.</p>
+        <span class="flow-tip">e.g. "B2B SaaS training. Keep role names like Coach and Facilitator untranslated."</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-left"><div class="flow-num">4</div><div class="flow-line"></div></div>
+      <div class="flow-content">
+        <p class="flow-title">Promote creates the translated program</p>
+        <p class="flow-desc">A new, independent program is created in the target language. You can review, edit, and publish it separately from the original.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="callout">
+    <div class="callout-num">22</div>
+    <div class="callout-text">
+      <p>Languages supported</p>
+      <p>22 languages and counting — from Swedish to Japanese, your learners can train in the language they think in.</p>
+    </div>
+  </div>
+
+  <p class="section-label">What gets translated</p>
+  <div class="translation-grid">
+    <div class="trans-card yes">
+      <p class="trans-label yes">Translated automatically</p>
+      <ul class="trans-list">
+        <li>Modules, content pages, and tasks</li>
+        <li>Goals</li>
+        <li>Surveys and quizzes</li>
+        <li>Announcement drafts</li>
+      </ul>
+    </div>
+    <div class="trans-card no">
+      <p class="trans-label no">Not translated</p>
+      <ul class="trans-list">
+        <li>Resources</li>
+        <li>E-learnings</li>
+        <li>Embedded content</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Key details</p>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Powered by DeepL</p>
+        <p class="feature-desc">One of the highest-rated machine translation engines — known for natural, contextually accurate output.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Independent copy</p>
+        <p class="feature-desc">The translated program is fully independent. Edit, schedule, and manage it separately without affecting the original.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Review before publishing</p>
+        <p class="feature-desc">A built-in review prompt reminds you to check the translation in the program builder before going live.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Add-on feature</p>
+        <p class="feature-desc">Translation must be enabled for your site. Contact your Promote administrator or Promote support to get started.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to reach more learners?</h3>
+      <p>Read the full guide in the Promote Help Center.</p>
+    </div>
+    <a class="cta-btn" href="https://promote.zendesk.com/hc/en-us" target="_blank">Read the guide →</a>
+  </div>
+
+  <p class="footer-note">Promote · promoteint.com</p>
+</div>
+</body>
+</html>
