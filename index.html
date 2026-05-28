@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promote Feature Catalogue</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --purple: #731d75; --purple-dark: #5a1560; --purple-light: #f3e6f4;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); }
+  .page { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  /* Header */
+  .page-header { margin-bottom: 2.5rem; }
+  .page-header h1 { font-size: 28px; font-weight: 700; color: var(--text); letter-spacing: -.02em; margin-bottom: .4rem; }
+  .page-header p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+  .promote-mark { display: inline-flex; align-items: center; gap: 6px; background: #f3e6f4; color: #5a1560; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 100px; margin-bottom: 1rem; }
+
+  /* Filter bar */
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+  .filter-btn { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all .15s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .filter-btn.active-green { background: #731d75; color: #fff; border-color: #731d75; }
+
+  /* Stats row */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 2.5rem; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .85rem 1rem; }
+  .stat-num { font-size: 24px; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 3px; }
+  .stat-label { font-size: 12px; color: var(--text-faint); }
+  .stat-num.green { color: #731d75; }
+
+  .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1rem; }
+
+  /* Feature rows */
+  .feature-list { display: flex; flex-direction: column; gap: 10px; }
+  .feature-row { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; transition: border-color .15s; text-decoration: none; color: inherit; }
+  .feature-row:hover { border-color: #b0b0aa; }
+  .feature-row.available { border-left: 3px solid #731d75; }
+  .feature-row.coming-soon { border-left: 3px solid #E8A838; opacity: .8; }
+  .feature-row.planned { border-left: 3px solid #c8c8c0; opacity: .65; }
+  .feature-icon { width: 40px; height: 40px; border-radius: 8px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .feature-main { flex: 1; min-width: 0; }
+  .feature-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .feature-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+  .status-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
+  .pill-available { background: #f3e6f4; color: #5a1560; }
+  .pill-soon { background: #FEF3E2; color: #B06000; }
+  .pill-planned { background: var(--surface-2); color: var(--text-faint); border: 1px solid var(--border); }
+  .feature-pillar { font-size: 11px; color: var(--text-faint); text-align: right; }
+  .feature-links { display: flex; gap: 6px; margin-top: 3px; }
+  .doc-link { font-size: 11px; color: #731d75; text-decoration: none; border: 1px solid #f3e6f4; background: #f3e6f4; padding: 2px 8px; border-radius: 4px; }
+  .doc-link:hover { background: #d9a8db; }
+
+  .placeholder-note { background: var(--surface-2); border: 1px dashed var(--border); border-radius: 10px; padding: 1.25rem; text-align: center; font-size: 13px; color: var(--text-faint); }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-green { background: #731d75; }
+  .dot-amber { background: #E8A838; }
+  .dot-gray { background: #c8c8c0; }
+
+  @media (max-width: 520px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .feature-desc { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <span class="promote-mark">Promote · Feature Catalogue</span>
+    <h1>Feature library</h1>
+    <p>A reference for all Promote features — use these assets for customer onboarding, sales conversations, and marketing campaigns.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><p class="stat-num green">4</p><p class="stat-label">Available</p></div>
+    <div class="stat"><p class="stat-num">0</p><p class="stat-label">Coming soon</p></div>
+    <div class="stat"><p class="stat-num">—</p><p class="stat-label">Planned</p></div>
+    <div class="stat"><p class="stat-num">4</p><p class="stat-label">Total features</p></div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot dot-green"></span> Available</div>
+    <div class="legend-item"><span class="legend-dot dot-amber"></span> Coming soon</div>
+    <div class="legend-item"><span class="legend-dot dot-gray"></span> Planned</div>
+  </div>
+
+  <p class="section-label">All features</p>
+
+  <div class="feature-list">
+
+    <!-- Qualifications -->
+    <div class="feature-row available">
+      <div class="feature-icon">🏅</div>
+      <div class="feature-main">
+        <p class="feature-name">Qualifications</p>
+        <p class="feature-desc">Define, issue, and track certifications, compliance requirements, and competencies — automatically tied to program completion.</p>
+        <div class="feature-links">
+          <a class="doc-link" href="qualifications/qualifications-web.html" target="_blank">Web version</a>
+          <a class="doc-link" href="qualifications/qualifications-email.html" target="_blank">Email version</a>
+          <a class="doc-link" href="qualifications/qualifications.md" target="_blank">Markdown</a>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <span class="status-pill pill-available">Available</span>
+        <span class="feature-pillar">Training Management</span>
+      </div>
+    </div>
+
+    <!-- Translation -->
+    <div class="feature-row available">
+      <div class="feature-icon">🌐</div>
+      <div class="feature-main">
+        <p class="feature-name">Translation of Program Content</p>
+        <p class="feature-desc">Create fully translated program copies using DeepL — across any of your enabled languages (22 available in total) with a context field to guide accuracy.</p>
+        <div class="feature-links">
+          <a class="doc-link" href="translation/translation-web.html" target="_blank">Web version</a>
+          <a class="doc-link" href="translation/translation-email.html" target="_blank">Email version</a>
+          <a class="doc-link" href="translation/translation.md" target="_blank">Markdown</a>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <span class="status-pill pill-available">Available</span>
+        <span class="feature-pillar">Program Design</span>
+      </div>
+    </div>
+
+    <!-- Reporting API -->
+    <div class="feature-row available">
+      <div class="feature-icon">📊</div>
+      <div class="feature-main">
+        <p class="feature-name">Reporting API</p>
+        <p class="feature-desc">Connect Promote to Power BI, Tableau, or any BI tool and keep your learning dashboards up to date automatically — no manual exports.</p>
+        <div class="feature-links">
+          <a class="doc-link" href="reporting-api/reporting-api-web.html" target="_blank">Web version</a>
+          <a class="doc-link" href="reporting-api/reporting-api-email.html" target="_blank">Email version</a>
+          <a class="doc-link" href="reporting-api/reporting-api.md" target="_blank">Markdown</a>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <span class="status-pill pill-available">Available</span>
+        <span class="feature-pillar">Reporting · Analytics</span>
+      </div>
+    </div>
+
+    <!-- Multi-language Programs -->
+    <div class="feature-row available">
+      <div class="feature-icon">🌐</div>
+      <div class="feature-main">
+        <p class="feature-name">Multi-language Programs</p>
+        <p class="feature-desc">Build once, deliver in every language. Members choose their preferred language within the same program — with a full review and re-translate workflow.</p>
+        <div class="feature-links">
+          <a class="doc-link" href="multi-language/multi-language-web.html" target="_blank">Web version</a>
+          <a class="doc-link" href="multi-language/multi-language-email.html" target="_blank">Email version</a>
+          <a class="doc-link" href="multi-language/multi-language.md" target="_blank">Markdown</a>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <span class="status-pill pill-available">Available</span>
+        <span class="feature-pillar">Program Design</span>
+      </div>
+    </div>
+
+    <div class="placeholder-note">
+      More features will appear here as they are added to the catalogue.
+    </div>
+
+  </div>
+
+  <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <p style="font-size:12px;color:var(--text-faint);text-align:center;">Promote · Internal use — CS, Sales &amp; Marketing · Last updated May 2026</p>
+  </div>
+
+</div>
+</body>
+</html>
