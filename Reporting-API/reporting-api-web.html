@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporting API — Promote</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand: #731d75; --brand-dark: #5a1560; --brand-light: #f3e6f4; --brand-mid: #d9a8db;
+    --pink: #d33375;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    --radius: 10px; --radius-sm: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: .6rem; }
+  .hero-title { font-size: 42px; font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 1rem; letter-spacing: -.02em; }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .lead { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 580px; margin-bottom: .5rem; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+  .badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+  .badge-gray { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+
+  /* Big three benefits */
+  .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+  .benefit { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .benefit-icon { font-size: 24px; margin-bottom: .75rem; }
+  .benefit-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .35rem; }
+  .benefit-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* Data types grid */
+  .data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 2.5rem; }
+  .data-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.15rem; display: flex; gap: 10px; align-items: flex-start; }
+  .data-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); margin-top: 5px; flex-shrink: 0; }
+  .data-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .data-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* Use cases */
+  .use-cases { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
+  .use-case { background: var(--brand-light); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; align-items: flex-start; }
+  .use-case-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .use-case-text { font-size: 14px; color: var(--brand-dark); line-height: 1.55; font-weight: 500; }
+
+  /* Callout strip */
+  .callout-strip { background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+  .callout-strip p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .callout-strip p strong { color: var(--text); }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, #731d75 0%, #d33375 100%); border-radius: var(--radius); padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cta-text { color: #fff; }
+  .cta-text h3 { font-size: 18px; font-weight: 600; margin-bottom: .3rem; }
+  .cta-text p { font-size: 14px; opacity: .85; }
+  .cta-btn { background: #fff; color: var(--brand-dark); font-size: 14px; font-weight: 600; padding: .65rem 1.4rem; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+
+  .footer-note { margin-top: 2rem; font-size: 12px; color: var(--text-faint); text-align: center; }
+
+  @media (max-width: 520px) {
+    .benefits, .data-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">New in Promote</p>
+  <h1 class="hero-title">Your learning data,<br><em>wherever you need it.</em></h1>
+  <p class="lead">Connect Promote to the tools your organisation already uses and turn your learning data into insights that drive real decisions — automatically, without manual exports.</p>
+  <div class="badge-row">
+    <span class="badge badge-brand">✓ Now available</span>
+    <span class="badge badge-gray">Reporting</span>
+    <span class="badge badge-gray">Analytics</span>
+    <span class="badge badge-gray">Requires technical setup</span>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">What it unlocks</p>
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">📊</div>
+      <p class="benefit-title">Live dashboards</p>
+      <p class="benefit-desc">Your learning data stays current in Power BI, Tableau, Looker, or any BI tool — no more manual exports or stale spreadsheets.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔗</div>
+      <p class="benefit-title">One view of your business</p>
+      <p class="benefit-desc">Combine Promote data with HR, performance, or operational data to see the full picture in a single report.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">⚙️</div>
+      <p class="benefit-title">Set it up once</p>
+      <p class="benefit-desc">Once configured, the integration runs automatically. Your dashboards update on schedule without any ongoing manual work.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">What data is available</p>
+  <div class="data-grid">
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">Learner progress</p>
+        <p class="data-desc">Individual activity, task completion, and engagement across programs.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">Program summary</p>
+        <p class="data-desc">Aggregated completion rates, task counts, and engagement per program.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">Goals</p>
+        <p class="data-desc">Goal progress per learner and program — track whether objectives are being met.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">Coaches &amp; facilitators</p>
+        <p class="data-desc">Activity levels, engagement, and pending review tasks across your delivery team.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">User qualifications</p>
+        <p class="data-desc">Qualification records including type, version, validity, and current status — ready for compliance reporting.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">AI conversations</p>
+        <p class="data-desc">Interactions between learners and AI assistants — understand how AI is being used in your programs.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">Comments &amp; discussions</p>
+        <p class="data-desc">Individual comments and discussion activity across programs.</p>
+      </div>
+    </div>
+    <div class="data-item">
+      <div class="data-dot"></div>
+      <div>
+        <p class="data-name">Users &amp; permissions</p>
+        <p class="data-desc">User account data, sign-in information, and roles across the platform.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">What you could build</p>
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">📈</div>
+      <p class="use-case-text">A live Power BI or Tableau dashboard showing completion rates, engagement, and goal progress across all your programs — updated automatically.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🏢</div>
+      <p class="use-case-text">A single report combining Promote learner data with HR or performance data, so you can see the impact of training on business outcomes.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">✅</div>
+      <p class="use-case-text">An automated compliance report pulling qualification status for every employee — no manual chasing, always audit-ready.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">👥</div>
+      <p class="use-case-text">A coach and facilitator activity overview across multiple programs, surfacing who needs support and where delivery is strongest.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🤖</div>
+      <p class="use-case-text">An AI usage report showing how learners are engaging with AI assistants — to guide how you develop AI-enabled programs going forward.</p>
+    </div>
+  </div>
+
+  <div class="callout-strip">
+    <p><strong>Getting started.</strong> Decide what you want to build, then loop in a developer or BI specialist. They'll find everything they need in the API documentation inside Promote. Not sure where to start? Reach out to Promote support and we'll help you scope it out.</p>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>See what's possible for your organisation.</h3>
+      <p>Talk to your Promote contact or reach out to support.</p>
+    </div>
+    <a class="cta-btn" href="https://promote.zendesk.com/hc/en-us" target="_blank">Get in touch →</a>
+  </div>
+
+  <p class="footer-note">Promote · promoteint.com</p>
+</div>
+</body>
+</html>
