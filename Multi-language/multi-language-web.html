@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-language Programs — Promote</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand: #731d75; --brand-dark: #5a1560; --brand-light: #f3e6f4; --brand-mid: #d9a8db;
+    --pink: #d33375;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    --radius: 10px; --radius-sm: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: .6rem; }
+  .hero-title { font-size: 42px; font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 1rem; letter-spacing: -.02em; }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .lead { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 580px; margin-bottom: .5rem; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+  .badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+  .badge-gray { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+
+  /* Vs comparison */
+  .vs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 2.5rem; }
+  .vs-card { border-radius: var(--radius); padding: 1.25rem; }
+  .vs-card.before { background: var(--surface-2); border: 1px solid var(--border); }
+  .vs-card.after { background: var(--brand-light); border: 1px solid var(--brand-mid); }
+  .vs-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+  .vs-card.before .vs-label { color: var(--text-faint); }
+  .vs-card.after .vs-label { color: var(--brand); }
+  .vs-card p { font-size: 13px; line-height: 1.6; }
+  .vs-card.before p { color: var(--text-muted); }
+  .vs-card.after p { color: var(--brand-dark); font-weight: 500; }
+
+  /* Feature highlights */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 2.5rem; }
+  .feature-item { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; }
+  .feature-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); margin-top: 6px; flex-shrink: 0; }
+  .feature-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+  .feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* Differentiator callout */
+  .diff-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2.5rem; }
+  .diff-header { background: linear-gradient(135deg, #731d75, #d33375); padding: 1rem 1.5rem; }
+  .diff-header p { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: .02em; }
+  .diff-header span { opacity: .8; font-weight: 400; }
+  .diff-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+  .diff-item { display: flex; gap: 12px; align-items: flex-start; }
+  .diff-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .diff-text strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 2px; }
+  .diff-text p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 2.5rem; }
+  .step { display: flex; gap: 1.25rem; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-line { width: 1px; background: var(--border); flex: 1; margin: 4px 0; min-height: 20px; }
+  .step:last-child .step-line { display: none; }
+  .step-content { padding-bottom: 1.4rem; }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: .25rem; padding-top: 5px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .step-tip { display: inline-block; margin-top: .5rem; font-size: 12px; color: var(--brand-dark); background: var(--brand-light); padding: 4px 10px; border-radius: var(--radius-sm); }
+
+  /* Cross-ref */
+  .crossref { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; align-items: center; margin-bottom: 2.5rem; }
+  .crossref-icon { font-size: 22px; flex-shrink: 0; }
+  .crossref-text p:first-child { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .crossref-text p:last-child { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, #731d75 0%, #d33375 100%); border-radius: var(--radius); padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cta-text { color: #fff; }
+  .cta-text h3 { font-size: 18px; font-weight: 600; margin-bottom: .3rem; }
+  .cta-text p { font-size: 14px; opacity: .85; }
+  .cta-btn { background: #fff; color: var(--brand-dark); font-size: 14px; font-weight: 600; padding: .65rem 1.4rem; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+
+  .footer-note { margin-top: 2rem; font-size: 12px; color: var(--text-faint); text-align: center; }
+
+  @media (max-width: 520px) {
+    .vs-row, .feature-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">New in Promote</p>
+  <h1 class="hero-title">One program.<br><em>Every language.</em></h1>
+  <p class="lead">Learning is easier in your own language. With Multi-language Programs, you can open up your training to a wider audience — build your program once and let every learner experience it in the language that works best for them. Language is no longer a barrier.</p>
+  <div class="badge-row">
+    <span class="badge badge-brand">✓ Now available</span>
+    <span class="badge badge-gray">Program Design</span>
+    <span class="badge badge-gray">Learner Experience</span>
+    <span class="badge badge-gray">Requires add-on</span>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">What it means for your learners</p>
+  <div class="feature-grid" style="margin-bottom:2.5rem;">
+    <div class="feature-item" style="grid-column:1/-1;background:var(--brand-light);border-color:var(--brand-mid);">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title" style="color:var(--brand-dark);">One program, every language</p>
+        <p class="feature-desc" style="color:var(--brand-dark);">Build your program once and enable translations for any of the languages available on your site. Members choose the language that works best for them — no duplicates to maintain, no one left out.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Differentiator section -->
+  <div class="diff-box">
+    <div class="diff-header">
+      <p>More than machine translation <span>— a translation workflow built for L&amp;D</span></p>
+    </div>
+    <div class="diff-body">
+      <div class="diff-item">
+        <div class="diff-icon">🔍</div>
+        <div class="diff-text">
+          <strong>Side-by-side review</strong>
+          <p>Before going live, review translations in a side-by-side comparison view — original and translated content side by side, with language tabs to switch between all available translations.</p>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">✏️</div>
+        <div class="diff-text">
+          <strong>Manual editing in the builder</strong>
+          <p>Any translation can be refined directly in the program builder — click any content item to edit it. Your terminology, your tone, your call.</p>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🔄</div>
+        <div class="diff-text">
+          <strong>Re-translate on change</strong>
+          <p>When you update content in the original language, Promote flags which translations are out of date. One click re-translates only what's changed — so translations never silently fall behind.</p>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon">🎯</div>
+        <div class="diff-text">
+          <strong>Translation context</strong>
+          <p>Guide DeepL with industry terms, preferred tone, or role names that should stay untranslated. The result is a translation that sounds like your organisation — not a generic machine output.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">How to set it up</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Open the program settings</p>
+        <p class="step-desc">Go to the Settings tab of any program and find the Translations section.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Select your languages</p>
+        <p class="step-desc">Choose which languages to translate into from the languages enabled on your site. Promote translates the content automatically via DeepL.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Add translation context (recommended)</p>
+        <p class="step-desc">Provide guidance on industry terms, tone, or role names that should stay untranslated — this is what separates a good translation from a generic one.</p>
+        <span class="step-tip">e.g. "Leadership development program. Keep Coach and Sponsor untranslated."</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Review before publishing</p>
+        <p class="step-desc">Use the side-by-side preview or edit directly in the builder. When you're happy, your program is ready for a multilingual audience.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">The member experience</p>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Language selector in the program</p>
+        <p class="feature-desc">Members see a globe icon in the navigation bar and can choose their preferred language before starting — or switch at any time.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Full content in their language</p>
+        <p class="feature-desc">Modules, tasks, goals, surveys, and quizzes all display in the chosen language. The original is always available as an option.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">Transparent about translation</p>
+        <p class="feature-desc">Optionally show a notice to members that content has been automatically translated — building trust with your audience.</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div>
+        <p class="feature-title">No impact on participation</p>
+        <p class="feature-desc">Language choice doesn't affect how members participate, complete tasks, or interact with coaches and facilitators.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="crossref">
+    <div class="crossref-icon">🔀</div>
+    <div class="crossref-text">
+      <p>Delivering the same program to separate cohorts in different languages?</p>
+      <p>Translation of Program Content creates an independent copy per language — giving each group their own dedicated space to interact in.</p>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to reach every learner?</h3>
+      <p>Read the full guide in the Promote Help Center.</p>
+    </div>
+    <a class="cta-btn" href="https://promote.zendesk.com/hc/en-us" target="_blank">Read the guide →</a>
+  </div>
+
+  <p class="footer-note">Promote · promoteint.com</p>
+</div>
+</body>
+</html>
