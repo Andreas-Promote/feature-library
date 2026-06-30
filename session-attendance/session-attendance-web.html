@@ -52,7 +52,8 @@
   .role-icon { font-size: 18px; }
   .role-name { font-size: 14px; font-weight: 600; color: var(--text); }
   .role-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
-  .role-tag { display: inline-block; margin-top: .5rem; font-size: 11px; color: var(--brand-dark); background: var(--brand-light); padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+  .role-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: .5rem; }
+  .role-tag { display: inline-block; font-size: 11px; color: var(--brand-dark); background: var(--brand-light); padding: 3px 9px; border-radius: 4px; font-weight: 500; }
 
   /* Getting started */
   .start-strip { background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; display: flex; gap: 1rem; align-items: flex-start; }
@@ -135,8 +136,8 @@
         <span class="role-icon">🎤</span>
         <p class="role-name">Facilitators</p>
       </div>
-      <p class="role-desc">Mark and update attendance directly from the session. Changes can be made at any time.</p>
-      <span class="role-tag">Can edit · Can export</span>
+      <p class="role-desc">Mark and update attendance directly from the session — changes can be made at any time. Export the attendance list whenever you need to share it with a manager, coordinator, or anyone else who needs the record.</p>
+      <div class="role-tags"><span class="role-tag">Can edit</span><span class="role-tag">Can export</span></div>
     </div>
     <div class="role-card">
       <div class="role-header">
@@ -144,7 +145,7 @@
         <p class="role-name">Admins</p>
       </div>
       <p class="role-desc">View and manage attendance across all sessions from a dedicated Attendance tab. Full visibility across the program, with the same edit and export capabilities as facilitators.</p>
-      <span class="role-tag">Can edit · Can export · Full overview</span>
+      <div class="role-tags"><span class="role-tag">Can edit</span><span class="role-tag">Can export</span><span class="role-tag">Full overview</span></div>
     </div>
     <div class="role-card">
       <div class="role-header">
@@ -152,7 +153,7 @@
         <p class="role-name">Coaches</p>
       </div>
       <p class="role-desc">Can see the attendance status of the learners they mentor — useful for following up with anyone who missed a session.</p>
-      <span class="role-tag">Read only</span>
+      <div class="role-tags"><span class="role-tag">Read only</span></div>
     </div>
     <div class="role-card">
       <div class="role-header">
@@ -160,7 +161,7 @@
         <p class="role-name">Learners</p>
       </div>
       <p class="role-desc">Can see their own attendance status on the session page. No visibility into other learners' attendance.</p>
-      <span class="role-tag">Own status only</span>
+      <div class="role-tags"><span class="role-tag">Own status only</span></div>
     </div>
   </div>
 
