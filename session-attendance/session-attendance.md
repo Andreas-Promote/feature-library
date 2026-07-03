@@ -25,7 +25,7 @@ Attendance tracking in Promote closes that gap: records live alongside the progr
 
 - **Track in real time** — mark attendance session by session, update it at any time, and keep a live record across all sessions in the program
 - **Tie to completion** — sessions are often an important part of a Promote program. Include session attendance as a mandatory completion criterion — so completion reflects everything a learner was expected to do, not just the content they worked through
-- **Export records** — export a full attendance list as CSV including name, email, username, attendance status, and session reference — ready for compliance records or reporting
+- **Export records** — export attendance as a CSV for external systems, or as a PDF to share with anyone who doesn't have access to Promote. Both formats include name, email, username, attendance status, and session reference
 
 ---
 
@@ -34,8 +34,9 @@ Attendance tracking in Promote closes that gap: records live alongside the progr
 Sessions are often an important part of a Promote program. You can now include session attendance as a mandatory completion criterion — so completion reflects everything a learner was expected to do, not just the content they worked through:
 
 - Session attendance can be included as a mandatory completion criterion alongside tasks and quizzes
-- When set as a completion criterion, attendance tracking is enabled automatically for that session and cannot be disabled while the requirement is active
+- When set as a completion criterion, tracking is enabled automatically for that session
 - Works alongside other completion criteria — tasks, quizzes, and attendance together
+- Sessions can also be added to program goals — attendance then contributes to a learner's goal progress alongside their tasks
 - Removing attendance after a learner has already completed the program does not affect their completion status retroactively
 
 ---
