@@ -82,4 +82,4 @@ Attendance tracking is disabled by default and enabled per session:
 
 ---
 
-*Last updated: May 2026*
+*Last updated: May 2026* 
