@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scheduled Announcements — Promote</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand: #731d75; --brand-dark: #5a1560; --brand-light: #f3e6f4; --brand-mid: #d9a8db;
+    --pink: #d33375;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    --radius: 10px; --radius-sm: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: .6rem; }
+  .hero-title { font-size: 42px; font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 1rem; letter-spacing: -.02em; }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .lead { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 580px; margin-bottom: .5rem; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+  .badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+  .badge-gray { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .context-box { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+  .context-box p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+  .context-box p strong { color: var(--text); }
+
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+
+  /* Benefits */
+  .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+  .benefit { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .benefit-icon { font-size: 24px; margin-bottom: .75rem; }
+  .benefit-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .35rem; }
+  .benefit-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 2.5rem; }
+  .step { display: flex; gap: 1.25rem; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-line { width: 1px; background: var(--border); flex: 1; margin: 4px 0; min-height: 20px; }
+  .step:last-child .step-line { display: none; }
+  .step-content { padding-bottom: 1.4rem; }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: .25rem; padding-top: 5px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* Use cases */
+  .use-cases { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
+  .use-case { background: var(--brand-light); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; align-items: flex-start; }
+  .use-case-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .use-case-text { font-size: 14px; color: var(--brand-dark); line-height: 1.55; font-weight: 500; }
+
+  /* Good to know */
+  .good-to-know { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 10px; }
+  .gtk-item { display: flex; gap: 10px; align-items: flex-start; }
+  .gtk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .gtk-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .gtk-item p strong { color: var(--text); }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, #731d75 0%, #d33375 100%); border-radius: var(--radius); padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cta-text { color: #fff; }
+  .cta-text h3 { font-size: 18px; font-weight: 600; margin-bottom: .3rem; }
+  .cta-text p { font-size: 14px; opacity: .85; }
+  .cta-btn { background: #fff; color: var(--brand-dark); font-size: 14px; font-weight: 600; padding: .65rem 1.4rem; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+
+  .footer-note { margin-top: 2rem; font-size: 12px; color: var(--text-faint); text-align: center; }
+
+  @media (max-width: 520px) {
+    .benefits { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">New in Promote</p>
+  <h1 class="hero-title">Prepare now.<br><em>Publish exactly when it matters.</em></h1>
+  <p class="lead">Facilitators can now write announcements ahead of time and let Promote publish them automatically — at the right moment, without needing to log in.</p>
+  <div class="badge-row">
+    <span class="badge badge-brand">✓ Now available</span>
+    <span class="badge badge-gray">Communication</span>
+    <span class="badge badge-gray">Facilitator Tools</span>
+  </div>
+
+  <div class="context-box">
+    <p><strong>What's an announcement?</strong> Announcements work like a news article inside a program — facilitators use them to share updates, reminders, or important information with learners, coaches, or the whole program. When published, a notification is sent straight to each member's email.</p>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">What's new</p>
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">✍️</div>
+      <p class="benefit-title">Prepare in advance</p>
+      <p class="benefit-desc">Write announcements whenever it suits you — during program setup, in a batch, or weeks ahead of when they need to go out.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">⏱️</div>
+      <p class="benefit-title">Publish automatically</p>
+      <p class="benefit-desc">Set a date and time and Promote takes care of the rest. No need to log in and hit publish at the right moment.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🎛️</div>
+      <p class="benefit-title">Stay in control</p>
+      <p class="benefit-desc">Edit or cancel a scheduled announcement any time before it goes out. Cancelling simply returns it to draft.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">How it works</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Write your announcement</p>
+        <p class="step-desc">Create it as usual from the Announcements tab — title, content, and who should see it.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Choose Publish later</p>
+        <p class="step-desc">Instead of publishing immediately or saving as a draft, select Publish later.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Pick the date and time</p>
+        <p class="step-desc">Set exactly when it should go live and confirm.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">It publishes itself</p>
+        <p class="step-desc">At the scheduled time, Promote publishes the announcement and sends notifications to program members automatically.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Where this helps</p>
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">👋</div>
+      <p class="use-case-text">Queue up a welcome message to go out the morning a program starts, without needing to be online.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🔁</div>
+      <p class="use-case-text">Prepare a full set of announcements in advance for a program that runs multiple times — write once, schedule for every run.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">⏰</div>
+      <p class="use-case-text">Set task and deadline reminders to publish automatically a few days before they're due.</p>
+    </div>
+  </div>
+
+  <div class="good-to-know">
+    <div class="gtk-item">
+      <div class="gtk-icon">🔁</div>
+      <p><strong>Built for programs that run again.</strong> When you copy a program, its announcements come with it as drafts — all the writing is already done. Scheduled announcements are also included, though as plain drafts rather than with their original schedule, so give them a new publish date for the new run and they're ready to go.</p>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to plan ahead?</h3>
+      <p>Read the full guide in the Promote Help Center.</p>
+    </div>
+    <a class="cta-btn" href="https://promote.zendesk.com/hc/en-us" target="_blank">Read the guide →</a>
+  </div>
+
+  <p class="footer-note">Promote · promoteint.com</p>
+</div>
+</body>
+</html>
