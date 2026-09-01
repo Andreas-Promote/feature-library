@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Assistants in Promote — Promote</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand: #731d75; --brand-dark: #5a1560; --brand-light: #f3e6f4; --brand-mid: #d9a8db;
+    --pink: #d33375;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    --radius: 10px; --radius-sm: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: .6rem; }
+  .hero-title { font-size: 42px; font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 1rem; letter-spacing: -.02em; }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .lead { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 580px; margin-bottom: .5rem; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+  .badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+  .badge-gray { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .context-box { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+  .context-box p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+  .context-box p strong { color: var(--text); }
+
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+
+  /* Four types grid */
+  .type-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+  .type-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .type-icon { width: 38px; height: 38px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: .85rem; font-size: 20px; background: var(--brand-light); }
+  .type-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+  .type-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: .5rem; }
+  .type-example { font-size: 12px; color: var(--brand-dark); font-weight: 500; }
+
+  /* Guided vs full control */
+  .control-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 2.5rem; }
+  .control-card { border-radius: var(--radius); padding: 1.4rem; }
+  .control-card.guided { background: var(--surface); border: 1px solid var(--border); }
+  .control-card.full { background: linear-gradient(135deg, #731d75, #d33375); }
+  .control-icon { font-size: 22px; margin-bottom: .6rem; }
+  .control-title { font-size: 15px; font-weight: 600; margin-bottom: .4rem; }
+  .control-card.guided .control-title { color: var(--text); }
+  .control-card.full .control-title { color: #fff; }
+  .control-desc { font-size: 13px; line-height: 1.6; }
+  .control-card.guided .control-desc { color: var(--text-muted); }
+  .control-card.full .control-desc { color: rgba(255,255,255,.9); }
+
+  /* Use cases */
+  .use-cases { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
+  .use-case { background: var(--brand-light); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; align-items: flex-start; }
+  .use-case-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .use-case-text { font-size: 14px; color: var(--brand-dark); line-height: 1.55; font-weight: 500; }
+
+  /* Good to know */
+  .good-to-know { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 10px; }
+  .gtk-item { display: flex; gap: 10px; align-items: flex-start; }
+  .gtk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .gtk-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .gtk-item p strong { color: var(--text); }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, #731d75 0%, #d33375 100%); border-radius: var(--radius); padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cta-text { color: #fff; }
+  .cta-text h3 { font-size: 18px; font-weight: 600; margin-bottom: .3rem; }
+  .cta-text p { font-size: 14px; opacity: .85; }
+  .cta-btn { background: #fff; color: var(--brand-dark); font-size: 14px; font-weight: 600; padding: .65rem 1.4rem; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+
+  .footer-note { margin-top: 2rem; font-size: 12px; color: var(--text-faint); text-align: center; }
+
+  @media (max-width: 520px) {
+    .type-grid, .control-row { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">New in Promote</p>
+  <h1 class="hero-title">Meet your program's<br><em>new AI assistants.</em></h1>
+  <p class="lead">Create and manage AI assistants directly in Promote — no separate tool, no prompt engineering required, unless you want it.</p>
+  <div class="badge-row">
+    <span class="badge badge-brand">✓ Now available</span>
+    <span class="badge badge-gray">AI</span>
+    <span class="badge badge-gray">Program Design</span>
+    <span class="badge badge-gray">Requires add-on</span>
+  </div>
+
+  <div class="context-box">
+    <p><strong>What's an AI assistant?</strong> AI assistants live inside a dedicated tab in your programs, interacting directly with learners — answering questions, running practice scenarios, or reinforcing knowledge through quizzes. A guided form walks you through designing one, tailored to the type you choose.</p>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Four types, one home</p>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-icon">🧑‍🏫</div>
+      <p class="type-name">Expert</p>
+      <p class="type-desc">A knowledgeable assistant that answers questions using your own training materials as its source.</p>
+      <p class="type-example">e.g. Answering FAQs about a compliance policy</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">🎭</div>
+      <p class="type-name">Roleplay</p>
+      <p class="type-desc">An interactive character that simulates real scenarios and gives immediate feedback on performance.</p>
+      <p class="type-example">e.g. Practising a difficult customer conversation</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">✅</div>
+      <p class="type-name">Quiz</p>
+      <p class="type-desc">A quiz master that asks questions, evaluates answers, and reinforces learning with instant feedback.</p>
+      <p class="type-example">e.g. Testing recall after a training module</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon">⚙️</div>
+      <p class="type-name">Generic</p>
+      <p class="type-desc">Full control for those who want it — write your own prompt from scratch, with no restrictions.</p>
+      <p class="type-example">e.g. A fully custom assistant for a unique use case</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Build it your way</p>
+  <div class="control-row">
+    <div class="control-card guided">
+      <div class="control-icon">🧭</div>
+      <p class="control-title">Guided setup</p>
+      <p class="control-desc">For Expert, Roleplay, and Quiz assistants, a guided form walks you through the relevant fields — no prompt engineering required. Just answer the questions.</p>
+    </div>
+    <div class="control-card full">
+      <div class="control-icon">🔓</div>
+      <p class="control-title">Full control</p>
+      <p class="control-desc">Prefer to write your own prompt? The Generic type gives you a blank canvas with no restrictions — total flexibility for advanced use cases.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Where this helps</p>
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">💬</div>
+      <p class="use-case-text">Give learners an always-available Expert assistant that answers questions about your training materials, day or night.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🎯</div>
+      <p class="use-case-text">Let learners practise negotiation, customer service, or difficult conversations with a Roleplay assistant before doing it for real.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🧠</div>
+      <p class="use-case-text">Reinforce retention with a Quiz assistant that checks understanding and explains what was missed.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🛠️</div>
+      <p class="use-case-text">Build a fully custom assistant with the Generic type for a use case none of the guided forms quite cover.</p>
+    </div>
+  </div>
+
+  <div class="good-to-know">
+    <div class="gtk-item">
+      <div class="gtk-icon">🔑</div>
+      <p><strong>Requires enabling.</strong> AI assistants must be enabled for your site before they can be used. Contact <span style="color:var(--brand-dark);">support@promoteint.com</span> to get started.</p>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Ready to build your first assistant?</h3>
+      <p>Read the full guide in the Promote Help Center.</p>
+    </div>
+    <a class="cta-btn" href="https://promote.zendesk.com/hc/en-us" target="_blank">Read the guide →</a>
+  </div>
+
+  <p class="footer-note">Promote · promoteint.com</p>
+</div>
+</body>
+</html>
