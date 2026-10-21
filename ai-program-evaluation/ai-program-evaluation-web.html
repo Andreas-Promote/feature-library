@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Program Evaluation — Promote</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand: #731d75; --brand-dark: #5a1560; --brand-light: #f3e6f4; --brand-mid: #d9a8db;
+    --pink: #d33375;
+    --text: #1a1a18; --text-muted: #5a5a56; --text-faint: #888780;
+    --border: #e0e0db; --bg: #fafaf8; --surface: #ffffff; --surface-2: #f5f5f2;
+    --radius: 10px; --radius-sm: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); line-height: 1.6; }
+  .page { max-width: 720px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: .6rem; }
+  .hero-title { font-size: 42px; font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 1rem; letter-spacing: -.02em; }
+  .hero-title em { font-style: normal; color: var(--brand); }
+  .lead { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 580px; margin-bottom: .5rem; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.5rem 0 2.5rem; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; }
+  .badge-brand { background: var(--brand-light); color: var(--brand-dark); }
+  .badge-beta { background: #FEF3E2; color: #B06000; }
+  .badge-gray { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .context-box { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+  .context-box p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+  .context-box p strong { color: var(--text); }
+
+  .divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 1.25rem; }
+
+  /* Benefits */
+  .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2.5rem; }
+  .benefit { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+  .benefit-icon { font-size: 24px; margin-bottom: .75rem; }
+  .benefit-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: .35rem; }
+  .benefit-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* Loop highlight */
+  .loop-box { background: linear-gradient(135deg, #731d75, #d33375); border-radius: var(--radius); padding: 1.75rem 2rem; margin-bottom: 2.5rem; }
+  .loop-box h3 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: .5rem; }
+  .loop-box p { font-size: 14px; color: #f0d5f1; line-height: 1.65; }
+  .loop-steps { margin-top: 1.1rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .loop-step { background: rgba(255,255,255,.18); color: #fff; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 100px; }
+  .loop-arrow { color: rgba(255,255,255,.7); font-size: 14px; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 2.5rem; }
+  .step { display: flex; gap: 1.25rem; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-line { width: 1px; background: var(--border); flex: 1; margin: 4px 0; min-height: 20px; }
+  .step:last-child .step-line { display: none; }
+  .step-content { padding-bottom: 1.4rem; }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: .25rem; padding-top: 5px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* Use cases */
+  .use-cases { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
+  .use-case { background: var(--brand-light); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; align-items: flex-start; }
+  .use-case-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .use-case-text { font-size: 14px; color: var(--brand-dark); line-height: 1.55; font-weight: 500; }
+
+  /* Good to know */
+  .good-to-know { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--brand); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 10px; }
+  .gtk-item { display: flex; gap: 10px; align-items: flex-start; }
+  .gtk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .gtk-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .gtk-item p strong { color: var(--text); }
+
+  /* CTA */
+  .cta-box { background: linear-gradient(135deg, #731d75 0%, #d33375 100%); border-radius: var(--radius); padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cta-text { color: #fff; }
+  .cta-text h3 { font-size: 18px; font-weight: 600; margin-bottom: .3rem; }
+  .cta-text p { font-size: 14px; opacity: .85; max-width: 380px; }
+  .cta-btn { background: #fff; color: var(--brand-dark); font-size: 14px; font-weight: 600; padding: .65rem 1.4rem; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block; }
+
+  .footer-note { margin-top: 2rem; font-size: 12px; color: var(--text-faint); text-align: center; }
+
+  @media (max-width: 520px) {
+    .benefits { grid-template-columns: 1fr; }
+    .hero-title { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">New in Promote</p>
+  <h1 class="hero-title">A second opinion on<br><em>your program design.</em></h1>
+  <p class="lead">Get an AI-powered assessment of what's working well and where your program could be stronger — aimed at making it more likely to lead to real behavioural change.</p>
+  <div class="badge-row">
+    <span class="badge badge-brand">✓ Now available</span>
+    <span class="badge badge-beta">Beta</span>
+    <span class="badge badge-gray">AI</span>
+    <span class="badge badge-gray">Program Design</span>
+    <span class="badge badge-gray">Requires AI features</span>
+  </div>
+
+  <div class="context-box">
+    <p><strong>What does it look at?</strong> The AI Evaluation tab analyses how your program is structured, which types of tasks it uses, and how the content and any attached resources support learning — taking into account the learning tools available in Promote. You get a structured assessment you can act on.</p>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">What you get</p>
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon">🎯</div>
+      <p class="benefit-title">Overall impact</p>
+      <p class="benefit-desc">A short summary of the program's likely effectiveness for learners, and any structural factors that may be limiting its impact.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">⚖️</div>
+      <p class="benefit-title">Strengths and improvements</p>
+      <p class="benefit-desc">What the program does well and why, alongside concrete recommendations for where it could be strengthened.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔎</div>
+      <p class="benefit-title">The reasoning behind it</p>
+      <p class="benefit-desc">Dig into each learning design dimension to see how the program performs and the evidence behind the assessment, then decide what to act on.</p>
+    </div>
+  </div>
+
+  <div class="loop-box">
+    <h3>Not a one-time check</h3>
+    <p>Make changes based on the feedback — new tasks, adjusted content, a different structure — then re-generate the evaluation to see whether those changes made a difference.</p>
+    <div class="loop-steps">
+      <span class="loop-step">Evaluate</span><span class="loop-arrow">→</span>
+      <span class="loop-step">Improve</span><span class="loop-arrow">→</span>
+      <span class="loop-step">Re-generate</span>
+    </div>
+  </div>
+
+  <p class="section-label">How it works</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Open the AI Evaluation tab</p>
+        <p class="step-desc">Go to any program you manage and select the AI Evaluation tab.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Generate the evaluation</p>
+        <p class="step-desc">One click and Promote analyses the program's structure and content, returning the evaluation shortly.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <p class="step-title">Read, refine, repeat</p>
+        <p class="step-desc">Review the strengths and improvement opportunities, update your program, and re-generate whenever you want a fresh look.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Where this helps</p>
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">🚀</div>
+      <p class="use-case-text">Sense-check a program before it launches and catch opportunities while changes are still easy to make.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🔄</div>
+      <p class="use-case-text">Take a fresh look at a program that has run before and see where it could be taken further.</p>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🧭</div>
+      <p class="use-case-text">Give newer program designers a structured starting point and a clear view of what good learning design looks like.</p>
+    </div>
+  </div>
+
+  <div class="good-to-know">
+    <div class="gtk-item">
+      <div class="gtk-icon">🧪</div>
+      <p><strong>Guidance, not a verdict.</strong> This feature is in beta. The evaluation is intended to inform your decisions, and results may vary between evaluations of the same program.</p>
+    </div>
+    <div class="gtk-item">
+      <div class="gtk-icon">🔑</div>
+      <p><strong>Requires AI features.</strong> The AI Evaluation tab is available to admins who can manage a program, once AI features are enabled for your site. Not seeing it? Contact your Promote administrator or Promote support.</p>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>Try it and tell us what you think.</h3>
+      <p>Open the AI Evaluation tab in a program and use the thumbs up or down to share your feedback — it helps us improve it.</p>
+    </div>
+    <a class="cta-btn" href="https://promote.zendesk.com/hc/en-us" target="_blank">Read the guide →</a>
+  </div>
+
+  <p class="footer-note">Promote · promoteint.com</p>
+</div>
+</body>
+</html>
