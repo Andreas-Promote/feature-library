@@ -27,6 +27,12 @@ The evaluation analyses how a program is structured, which types of tasks it use
 
 ---
 
+## Grounded in research, not guesswork
+
+The evaluation draws on the High Performance Learning Journey (HPLJ) methodology, a research-based approach built on decades of research into what makes learning turn into real performance. It's the approach Promote itself is built around, now applied to a customer's own programs.
+
+---
+
 ## Not a one-time check
 
 Admins can make changes based on the feedback (new tasks, adjusted content, a different structure) and click **Re-generate** to run a fresh evaluation of the program's current state and see whether the changes made a difference.
@@ -62,6 +68,7 @@ Admins can make changes based on the feedback (new tasks, adjusted content, a di
 
 - This is a **beta** feature. Keep the tone measured: describe it as guidance and a second opinion, not as an authority on what makes a program good. Avoid claims that it guarantees better outcomes.
 - Say what it actually does (assesses structure, task types and content, explains its reasoning, suggests improvements) rather than making broad claims about AI capability or uniqueness.
+- **Frame the research claim carefully.** The HPLJ methodology is research-based and established; the AI evaluation is a beta feature that applies it and can vary between runs. Say the evaluation is *grounded in* or *draws on* the methodology. Avoid saying the evaluation itself is "proven" or validated, which would conflict with the "guidance, not a verdict" message.
 - The **evaluate, improve, re-generate loop** is the strongest part of the story. It turns the evaluation into a working tool rather than a report.
 - The **explanation of reasoning** (the "Understand in more detail" section and the methodology shown behind the question mark icon) is worth highlighting for sceptical customers: admins can see why a suggestion was made before acting on it.
 - For **Training Providers**: frame around quality and consistency across the programs they deliver and sell on to their own customers.
